@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Manipulation</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <script>
+
+        var h1 = document.createElement('h3');
+        h1.style.backgroundColor = "cyan";
+        h1.style.borderStyle = "solid";
+        h1.style.textAlign = "center";
+        h1.innerHTML = "DATE MANIPULATION";
+        h1.style.fontWeight = "bolder"
+        h1.style.padding = "10px"
+        document.body.append(h1);
+
+        var h4 = document.createElement("h4");
+        h4.innerHTML = "Just enter your birthday and get the difference between your b'day and current date from years to milliseconds";
+        h4.style.textAlign = "center";
+        h4.style.paddingBottom = "10px";
+        document.body.append(h4);
+
+
+        var parentdiv = document.createElement('div');
+        // parentdiv.style.backgroundColor = "cyan";
+        parentdiv.style.textAlign = "center"
+
+
+        var dateelement = document.createElement('input');
+        dateelement.type = "date";
+        dateelement.id = "dob";
+
+        parentdiv.appendChild(dateelement);
+
+        var displaybutton = document.createElement('button');
+        displaybutton.innerHTML = "Search";
+        displaybutton.style.marginLeft = "10px"
+        displaybutton.style.fontWeight = "bolder"
+        displaybutton.setAttribute('type', 'button');
+        displaybutton.classList.add('btn', 'btn-primary');
+        displaybutton.setAttribute('onclick', 'datecalculation()');
+        parentdiv.appendChild(displaybutton);
+
+        var reloadbutton = document.createElement('button');
+        reloadbutton.innerHTML = "Refresh";
+        reloadbutton.style.marginLeft = "10px"
+        reloadbutton.style.fontWeight = "bolder"
+        reloadbutton.setAttribute('type', 'button');
+        reloadbutton.classList.add('btn', 'btn-primary');
+        reloadbutton.setAttribute('onclick', 'location.reload()');
+        parentdiv.appendChild(reloadbutton);
+
+        var displaydiv = document.createElement('h5');
+        displaydiv.style.textAlign = "center"
+        displaydiv.style.marginTop = "20px"
+
+
+
+        function datecalculation() {
+
+            var input = document.getElementById('dob').value;
+            // console.log(input);
+
+            if (Date.parse(input)) {
+                var inputdate = new Date(input);
+                console.log(inputdate);
+                var currentdate = new Date();
+                console.log(currentdate);
+
+                var millisecondsdiff = parseInt(currentdate.getTime()) - parseInt(inputdate.getTime());
+                console.log(millisecondsdiff);
+
+                var secondsdiff = Math.floor(millisecondsdiff / 1000);
+                console.log(secondsdiff);
+
+                var minutesdiff = Math.floor(secondsdiff / 60);
+                console.log(minutesdiff);
+
+                var hoursdiff = Math.floor(minutesdiff / 60);
+                console.log(hoursdiff);
+
+                var daydiff = Math.floor(hoursdiff / 24);
+                console.log(daydiff);
+
+                var yeardiff = getfullyear(inputdate, currentdate);
+                console.log(yeardiff);
+
+                var monthdiff = getmonthdiff(inputdate, currentdate);
+                console.log(monthdiff);
+
+                // var monthdiff1=yeardiff*12(currentdate.getMonth()-inputdate.getMonth()); 
+
+                // var yeardiff1=(currentdate.getFullYear())-(inputdate.getFullYear());
+                // console.log(yeardiff1);
+
+                function getfullyear(value1, value2) {
+                    var date1 = (value1);
+                    var date2 = new Date(value2);
+                    return date2.getFullYear() - date1.getFullYear();
+                }
+
+                function getmonthdiff(value1, value2) {
+                    var year = currentdate.getFullYear() - inputdate.getFullYear();
+                    var month = year * 12 + (currentdate.getMonth() - inputdate.getMonth());
+                    return month;
+                }
+
+                displaydiv.innerHTML = `Milliseconds : ${millisecondsdiff} <br>
+Seconds : ${secondsdiff} <br>
+Minutes : ${minutesdiff} <br>
+Hours : ${hoursdiff} <br>
+Date : ${daydiff} <br>
+Month : ${monthdiff} <br>
+year : ${yeardiff}`;
+            }
+            else {
+                displaydiv.innerHTML = "Input date is not valid";
+            }
+            document.body.appendChild(displaydiv);
+
+        }
+
+        document.body.append(parentdiv);
+
+
+
+
+    </script>
+</body>
+
+</html>
